@@ -1,6 +1,6 @@
 package com.example.weatherconsumer.kafka;
 
-import com.example.weatherconsumer.model.WeatherDto;
+import com.example.weatherconsumer.model.Weather;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,18 +23,18 @@ public class KafkaConsumerConfiguration {
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
 
-    public ConsumerFactory<String, WeatherDto> consumerFactory() {
+    public ConsumerFactory<String, Weather> consumerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         config.put(ConsumerConfig.GROUP_ID_CONFIG, "group-id");
 
         DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
         Map<String, Class<?>> classMap = new HashMap<>();
-        classMap.put("com.example.weatherconsumer.model.WeatherDto", WeatherDto.class);
+        classMap.put("com.example.weatherconsumer.model.WeatherDto", Weather.class);
         typeMapper.setIdClassMapping(classMap);
         typeMapper.addTrustedPackages("*");
 
-        JsonDeserializer<WeatherDto> jsonDeserializer = new JsonDeserializer<>(WeatherDto.class);
+        JsonDeserializer<Weather> jsonDeserializer = new JsonDeserializer<>(Weather.class);
         jsonDeserializer.setTypeMapper(typeMapper);
         jsonDeserializer.setUseTypeMapperForKey(true);
 
@@ -42,8 +42,8 @@ public class KafkaConsumerConfiguration {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, WeatherDto> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, WeatherDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, Weather> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Weather> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }

@@ -1,6 +1,6 @@
 package com.example.weatherconsumer.service;
 
-import com.example.weatherconsumer.model.WeatherDto;
+import com.example.weatherconsumer.model.Weather;
 import com.example.weatherconsumer.repository.WeatherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ public class WeatherServiceImpl implements WeatherService {
     private final WeatherRepository weatherRepository;
 
     @Override
-    public WeatherDto saveMessage(WeatherDto weatherDto) {
-        return weatherRepository.save(weatherDto);
+    public Weather saveMessage(Weather weather) {
+        return weatherRepository.save(weather);
     }
 }

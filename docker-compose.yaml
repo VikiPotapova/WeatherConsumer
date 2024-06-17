@@ -8,6 +8,12 @@ services:
     environment:
       MONGO_INITDB_DATABASE: weatherdatabase
 
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper_consumer
+    ports:
+      - "2181:2181"
+
   kafka:
     image: wurstmeister/kafka
     container_name: kafka_consumer

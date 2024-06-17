@@ -1,7 +1,7 @@
 package com.example.weatherconsumer.service;
 
-import com.example.weatherconsumer.model.WeatherDto;
+import com.example.weatherconsumer.model.Weather;
 
 public interface WeatherService {
-    WeatherDto saveMessage(WeatherDto weatherDto);
+    Weather saveMessage(Weather weather);
 }
